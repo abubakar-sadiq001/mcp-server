@@ -2,7 +2,7 @@ package mcp
 
 // InitializeRequest represents the initialize request
 
-type InitializedRequest struct {
+type InitializeRequest struct {
 	ProtocolVersion string
 	Capabilities    ClientCapabilities `json:"capabilities"`
 	ClientInfo      ClientInfo         `json:"clientInfo"`
