@@ -52,10 +52,14 @@ func (r *ProductToolset) registerProductTools() {
 
 	r.reg.Register(mcp.Tool{
 		Name:        "search_products",
-		Description: "Search for all available products in the store",
+		Description: "Search for products using a query string",
 		InputSchema: mcp.InputSchema{
 			Type: "object",
 			Properties: map[string]mcp.Property{
+				"q": {
+					Type:        "string",
+					Description: "Search query to filter products",
+				},
 				"limit": {
 					Type:        "number",
 					Description: "Maximum number of products to return (default: 20)",
@@ -95,6 +99,7 @@ func (r *ProductToolset) registerProductTools() {
 			Required: []string{"product_id"},
 		},
 	}, r.getProductDetails)
+
 }
 
 func (r *ProductToolset) getProductDetails(_ context.Context, args map[string]any) (mcp.CallToolResult, error) {
@@ -122,12 +127,13 @@ func (r *ProductToolset) getProductDetails(_ context.Context, args map[string]an
 		},
 	}, nil
 }
+
 func (r *ProductToolset) searchProducts(_ context.Context, args map[string]any) (mcp.CallToolResult, error) {
 
-	p, _ := args["q"].(string)
+	q, _ := args["q"].(string)
 	minPrice, _ := args["min_price"].(float64)
 	maxPrice, _ := args["max_price"].(float64)
-	category_id, _ := args["category_id"].(string)
+	categoryId, _ := args["category_id"].(string)
 
 	limit := 20
 	offset := 0
@@ -141,12 +147,21 @@ func (r *ProductToolset) searchProducts(_ context.Context, args map[string]any) 
 	}
 
 	params := map[string]string{
-		"limit":       fmt.Sprintf("%d", limit),
-		"offset":      fmt.Sprintf("%d", offset),
-		"q":           p,
-		"min_price":   fmt.Sprintf("%.2f", minPrice),
-		"max_price":   fmt.Sprintf("%.2f", maxPrice),
-		"category_id": category_id,
+		"limit":  fmt.Sprintf("%d", limit),
+		"offset": fmt.Sprintf("%d", offset),
+		"q":      q,
+	}
+
+	if minPrice > 0 {
+		params["min_price"] = fmt.Sprintf("%.2f", minPrice)
+	}
+
+	if maxPrice > 0 {
+		params["max_price"] = fmt.Sprintf("%.2f", maxPrice)
+	}
+
+	if categoryId != "" {
+		params["category"] = categoryId
 	}
 
 	response, err := r.restClient.Get("/search", params)

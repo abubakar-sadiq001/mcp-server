@@ -1,12 +1,10 @@
 package products
 
-import (
-	"time"
-)
+import "time"
 
 type Product struct {
 	Id          int     `json:"id"`
-	CategoryID  uint    `json:"category_id"`
+	CategoryId  int     `json:"category_id"`
 	Name        string  `json:"name"`
 	Description string  `json:"description"`
 	Price       float64 `json:"price"`
@@ -18,20 +16,20 @@ type Product struct {
 		Name        string `json:"name"`
 		Description string `json:"description"`
 		IsActive    bool   `json:"is_active"`
-	}
-
+	} `json:"category"`
 	Images []Image `json:"images"`
 }
 
 type ProductResponse struct {
-	Success string    `json:"success"`
+	Success bool      `json:"success"`
 	Message string    `json:"message"`
-	Data    []Product `json:"product"`
+	Data    []Product `json:"data"`
 	Error   string    `json:"error"`
 	Meta    struct {
-		Page  int `json:"page"`
-		Limit int `json:"limit"`
-		Total int `json:"total"`
+		Page       int `json:"page"`
+		Limit      int `json:"limit"`
+		Total      int `json:"total"`
+		TotalPages int `json:"total_pages"`
 	} `json:"meta"`
 }
 
