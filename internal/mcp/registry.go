@@ -31,7 +31,7 @@ func (r *Registry) Register(tool Tool, handler ToolFunc) {
 
 func (r *Registry) ListTools() []Tool {
 	tools := make([]Tool, 0, len(r.tools))
-	for _, tool := range tools {
+	for _, tool := range r.tools {
 		tools = append(tools, tool)
 	}
 	return tools

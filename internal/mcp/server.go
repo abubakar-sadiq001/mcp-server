@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	ProtocolVersion = "2025-05-18"
+	ProtocolVersion = "2024-11-05"
 	ServerName      = "ecommerce-mcp-server"
 	ServerVersion   = "1.0.0"
 )
