@@ -22,8 +22,8 @@ type ViewCartResponse struct {
 		Id        int `json:"id"`
 		UserId    int `json:"user_id"`
 		CartItems []struct {
-			Id      int `json:"id"`
-			Product struct {
+			Id              int `json:"id"`
+			ProductResponse struct {
 				Id          int     `json:"id"`
 				CategoryId  int     `json:"category_id"`
 				Name        string  `json:"name"`
@@ -42,9 +42,9 @@ type ViewCartResponse struct {
 				} `json:"category"`
 				CreatedAt time.Time `json:"created_at"`
 				UpdatedAt time.Time `json:"updated_at"`
-			} `json:"product"`
+			} `json:"product_response"`
 			Quantity  int       `json:"quantity"`
-			Subtotal  float64   `json:"subtotal"`
+			Subtotal  float64   `json:"total"`
 			CreatedAt time.Time `json:"created_at"`
 			UpdatedAt time.Time `json:"updated_at"`
 		} `json:"cart_items"`

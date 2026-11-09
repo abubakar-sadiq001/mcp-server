@@ -145,8 +145,8 @@ func (c *CartToolset) handleViewCart(_ context.Context, args map[string]any) (mc
 	resultText := fmt.Sprintf("🛒 Shopping Cart (%d items):\n\n", len(cart.Data.CartItems))
 	for i, item := range cart.Data.CartItems {
 		resultText += fmt.Sprintf("%d. %s - $%.2f × %d = $%.2f\n", i+1,
-			item.Product.Name,
-			item.Product.Price,
+			item.ProductResponse.Name,
+			item.ProductResponse.Price,
 			item.Quantity,
 			item.Subtotal)
 	}
